@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar color="appcolor">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Books Available</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="mybookList">
+      <div class="mybook" *ngFor="let book of myBooks">
+        <img src="{{book?.poster}}" alt=""/>
+        <h4>{{book?.title_hindi}}</h4>
+        <h5>By: <span>{{book?.author}}</span></h5>
+        <p>[{{book?.language}}]</p>
+        <button (click)="viewPdf(book)">View</button>
+      </div> 
+  </div>
+</ion-content>
+
+
+<!-- f2780b -->

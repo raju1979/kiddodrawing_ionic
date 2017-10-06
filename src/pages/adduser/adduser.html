@@ -1,0 +1,80 @@
+<!--
+  Generated template for the AdduserPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Fill your details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <div id="outerContainer">
+
+
+    <form #f="ngForm" novalidate (ngSubmit)="save(f.value, f.valid)">
+      <!-- we will place our fields here -->
+
+      <!--name-->
+      <div>
+        <!--bind name to ngModel, it's required with minimum 5 characters-->
+        <input type="text" name="name" [(ngModel)]="user.name" #name="ngModel" required minlength="5" placeholder="name">
+        <!--show error only when field is not valid & it's dirty or form submited-->
+        <small [hidden]="name.valid || (name.pristine && !f.submitted)">
+            Name is required (minimum 5 characters).
+        </small>
+      </div>
+
+      <!--email-->
+      <div>
+        <!--bind name to ngModel, it's required with minimum 5 characters-->
+        <input type="text" name="email" [(ngModel)]="user.email" #email="ngModel" required minlength="5" placeholder="email">
+        <!--show error only when field is not valid & it's dirty or form submited-->
+        <small [hidden]="email.valid || (email.pristine && !f.submitted)">
+              email is required (minimum 5 characters).
+          </small>
+      </div>
+
+      <!--password-->
+      <div>
+        <!--bind name to ngModel, it's required with minimum 5 characters-->
+        <input type="text" name="password" [(ngModel)]="user.password" #password="ngModel" required minlength="5" placeholder="password">
+        <!--show error only when field is not valid & it's dirty or form submited-->
+        <small [hidden]="password.valid || (password.pristine && !f.submitted)">
+              password is required (minimum 5 characters).
+            </small>
+      </div>
+
+      <!--location-->
+      <div>
+        <!--bind name to ngModel, it's required with minimum 5 characters-->
+        <input type="text" name="location" [(ngModel)]="user.location" #location="ngModel" required minlength="5" placeholder="location">
+        <!--show error only when field is not valid & it's dirty or form submited-->
+        <small [hidden]="location.valid || (location.pristine && !f.submitted)">
+              location is required (minimum 5 characters).
+            </small>
+      </div>
+
+      <!--location-->
+      <div>
+        <!--bind name to ngModel, it's required with minimum 5 characters-->
+        <input type="text" name="dob" [(ngModel)]="user.dob" #dob="ngModel" required minlength="5" placeholder="Date of birth">
+        <!--show error only when field is not valid & it's dirty or form submited-->
+        <small [hidden]="dob.valid || (dob.pristine && !f.submitted)">
+            D.O.B. is required (minimum 5 characters).
+          </small>
+      </div>
+
+
+
+      <button type="submit" class="submitBtn">Submit</button>
+    </form>
+
+  </div>
+</ion-content>

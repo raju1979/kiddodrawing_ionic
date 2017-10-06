@@ -1,0 +1,63 @@
+page-login {
+    .loginPage {
+        width: 100%;
+        height: 100%;
+        background-color: #2e3192;
+    }
+    .loginPageContainer,
+    .loadingDiv {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .loginPageContainer {
+        flex-direction: column;
+    }
+    .loginPageContainer img {
+        height: 150px;
+        margin: 30px 0;
+    }
+    .loginPageContainer form {
+        width: 100%;
+        padding: 1em;
+        margin-bottom: 40px;
+    }
+    .loginPageContainer form input {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 10px;
+        border: solid 1px #a0a6d8;
+        background: none;
+        color: #fff;
+    }
+    .loginPageContainer form button {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 10px;
+        border: solid 1px #1d80ec;
+        background: #1d80ec;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 1.3em;
+    }
+    .loginPageContainer div {
+        width: 100%;
+        padding: 1em;
+        margin-bottom: 40px;
+        background-color: #26298a;
+        border-top: solid 1px #6472e8;
+        border-bottom: solid 1px #6472e8;
+    }
+    .loginPageContainer div button {
+        width: 100%;
+        padding: 5px;
+        border: none;
+        background: none;
+        color: #fff; 
+        letter-spacing: 1px;
+        font-size: 1.2em;
+    }
+}

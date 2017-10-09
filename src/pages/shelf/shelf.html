@@ -3,20 +3,55 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Books Available</ion-title>
+    <ion-title>My Posts</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <div class="mybookList">
-      <div class="mybook" *ngFor="let book of myBooks">
-        <img src="{{book?.poster}}" alt=""/>
-        <h4>{{book?.title_hindi}}</h4>
-        <h5>By: <span>{{book?.author}}</span></h5>
-        <p>[{{book?.language}}]</p>
-        <button (click)="viewPdf(book)">View</button>
-      </div> 
-  </div>
+<ion-content>
+
+  <!-- <button ion-button block (click)="getUsers()">Get Users</button> -->
+
+  <!-- <button ion-button block (click)="getUserFeeds()">Get User Feeds</button> -->
+
+  <ion-card *ngFor="let feed of feedsArray, let i = index">
+    
+      <ion-item>
+        <h2>{{feed?.feedTitle}}</h2>
+        <p><time>{{feed?.updatedAt | amTimeAgo}}</time></p>
+      </ion-item>
+    
+      <img [src]="getImageBaseString(feed?.imgBaseString)" class="cardClass" />
+    
+      <ion-card-content>
+        <p>{{feed?.feedDescription}}.</p>
+      </ion-card-content>
+    
+      <ion-row *ngIf="feed?.feedComment.length > 0">
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="star"></ion-icon>
+            <div [innerHTML]="getStarAverage(feed)"></div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="text"></ion-icon>
+            <div>{{feed?.feedComment.length}} Comment</div>
+          </button>
+        </ion-col>
+        <!-- <ion-col center text-center>
+          <ion-note>
+            11h ago
+          </ion-note>
+        </ion-col> -->
+      </ion-row>
+    
+    </ion-card>
+
+  <!-- <img src="{{feedsArray[0]?.imgBaseString}}" alt="" /> -->
+
+
+  
 </ion-content>
 
 

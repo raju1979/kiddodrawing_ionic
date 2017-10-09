@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { DataService } from '../../services/data.service';
 
 interface User {
@@ -28,7 +28,7 @@ export class AdduserPage {
     dob:''
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private _dataService:DataService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private _dataService:DataService, private _alertController:AlertController) {
   }
 
   ionViewDidLoad() {
@@ -44,14 +44,25 @@ export class AdduserPage {
     this._dataService.addUserData(model)
       .subscribe(
         (data) => {
-          if(data.success == "done"){
-            console.log(data);
+          console.log(data)
+          if(data.success == true){
             this.navCtrl.pop();
+          }else{
+            this.showFailAlert()
           }
         },
-        (err) => console.log(err)
+        (err) => this.showFailAlert()
       )
   }
+
+  showFailAlert(){
+    const alert = this._alertController.create({
+      title: 'Error',
+      subTitle: 'There is some error. Please check you network and try again',
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  };//
 
   ngOnInit() {
     this.user = {

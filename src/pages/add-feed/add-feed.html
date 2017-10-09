@@ -1,0 +1,51 @@
+<!--
+  Generated template for the AddFeedPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Something Awesome...</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <div id="formContainer">
+
+    <form novalidate [formGroup]="myform" (ngSubmit) = "submitFeed()">
+
+    <ion-card>
+
+      <ion-card-content>
+        <input type="text" class="frmInput" placeholder="Enter Title" formControlName="feedTitle"/>
+      </ion-card-content>
+
+      <ion-card-content>
+        <input type="text" class="frmInput" placeholder="Enter Description"  formControlName="feedDescription"/>
+      </ion-card-content>
+
+      <ion-card-content>
+          <input type="text" class="frmInput" placeholder="Enter keywords" formControlName="feedKeywords"/>
+        </ion-card-content>
+
+      <input type="hidden"  formControlName="createdBy"/>
+      <input type="hidden"  formControlName="imgBaseString"/>
+
+      <ion-card-content>
+        <button ion-button block>Submit</button>
+      </ion-card-content>
+
+    </ion-card>
+
+  </form>
+
+  <pre>{{myform.value | json}}</pre>
+  </div>
+  
+
+</ion-content>

@@ -12,7 +12,7 @@ export class DataService {
 
   myData: string = "x_#@dndfhj^%";
 
-  baseExpressUrl = "http://localhost:5010/";
+  baseExpressUrl = "http://localhost:5000/";
 
   userData:any;
 
@@ -78,17 +78,67 @@ export class DataService {
 
   setUserDataOnLogin(data){
     this.userData = data;
+    this._storage.set('userdata',data);
   }
 
-  getBooksList(val){
+  getAllUsersList(val){
     console.log(val);
     console.log(this.userData);
 
     var ciphertext = CryptoJS.AES.encrypt(val, this.myData);
     var encodedCipherText = encodeURIComponent(ciphertext.toString());
-    console.log(encodedCipherText)
+    
 
-    return this._http.get(`${this.baseExpressUrl}booklist?token=${encodedCipherText}?id=${this.userData._id}`);
+    var formData = {
+      data: encodedCipherText
+    }
+
+    console.log(JSON.stringify(formData));
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let successData = this._http.post(`${this.baseExpressUrl}user/getusers`, formData, { headers: headers }).map(res => res.json());;
+    return successData;
+  };//
+
+
+  getUserPosts(val){
+
+    let userStoreData:any = '';
+
+    let userId = '';
+    let token = '';
+
+        userStoreData = JSON.parse(val);
+
+        userId = userStoreData.id;
+        token = userStoreData.token;
+
+        console.log(token);
+
+        let dataToSend  = {
+          token:token,
+          id:userId
+        }
+        
+        let ciphertext = CryptoJS.AES.encrypt(JSON.stringify(dataToSend), this.myData);
+        let encodedCipherText = encodeURIComponent(ciphertext.toString());
+
+        
+
+        var formData = {
+          data: encodedCipherText
+        };
+
+        console.log(JSON.stringify(formData));
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        let successData = this._http.post(`${this.baseExpressUrl}user/getuserfeeds`, formData, { headers: headers }).map(res => res.json());;
+        return successData;
+
+      
 
   }
 

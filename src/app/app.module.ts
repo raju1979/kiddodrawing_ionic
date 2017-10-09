@@ -22,6 +22,9 @@ import { AdduserPage } from '../pages/adduser/adduser';
 
 import { IonicStorageModule } from '@ionic/storage';
 
+import { MomentModule } from 'angular2-moment';
+import { AddFeed } from '../pages/add-feed/add-feed';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -29,7 +32,8 @@ import { IonicStorageModule } from '@ionic/storage';
     ListPage,
     LoginPage,
     ShelfPage,
-    AdduserPage
+    AdduserPage,
+    AddFeed
   ],
   imports: [
     BrowserModule,
@@ -37,7 +41,8 @@ import { IonicStorageModule } from '@ionic/storage';
     IonicModule.forRoot(MyApp),
     HttpModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MomentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -46,7 +51,8 @@ import { IonicStorageModule } from '@ionic/storage';
     ListPage,
     LoginPage,
     ShelfPage,
-    AdduserPage
+    AdduserPage,
+    AddFeed
   ],
   providers: [
     StatusBar,

@@ -1,9 +1,16 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { DataService } from '../../services/data.service';
 import { Storage } from '@ionic/storage';
+import { LoginPage } from '../login/login';
+
+import {MomentModule} from 'angular2-moment/moment.module';
+
+
 
 declare var cordova: any;
+
+declare var _:any;
 
 declare var PSPDFKit: any;
 
@@ -12,79 +19,145 @@ declare var PSPDFKit: any;
   templateUrl: 'shelf.html'
 })
 export class ShelfPage {
-  myBooks: Array<any> = [];
-  constructor(public navCtrl: NavController, private _dataService: DataService, private _storage: Storage) {
 
+  feedsArray:Array<any> = [];
 
+  constructor(public navCtrl: NavController, private _dataService: DataService, private _storage: Storage, private _alertController: AlertController) {
 
-    // this.myBooks = [
-    //   {
-    //     package_id: 'xc3_Tu6',
-    //     poster: "assets/packages/xc3_Tu6.jpg",
-    //     title: "King , Merchant and the worker",
-    //     title_hindi: "राजा व्यापारी और सेवक",
-    //     author: "Vishnu Sharma",
-    //     language: "Hindi",
-    //     free: "yes"
-    //   },
-    //   {
-    //     package_id: 'zen58h_2',
-    //     poster: "assets/packages/zen58h_2.jpg",
-    //     title: "The Foolish Sage & Swindler",
-    //     title_hindi: "मूर्ख साधू और ठग",
-    //     author: "Vishnu Sharma",
-    //     language: "Hindi",
-    //     free: "yes"
-    //   }
-    // ]
   };//
 
-  viewPdf(book) {
-    console.log(book);
-    this.showFromAsset(book.package_id);
 
-  }
-
-  showFromAsset(package_id: string) {
-    console.log(`${package_id}.pdf`);
-    PSPDFKit.showDocumentFromAssets(`www/assets/packages/${package_id}.pdf`, {
-      title: 'My PDF Document',
-      page: 0,
-      scrollDirection: PSPDFKit.PageScrollDirection.VERTICAL,
-      scrollMode: PSPDFKit.ScrollMode.CONTINUOUS,
-      useImmersiveMode: true
-    }, this.showSuccess, this.showError);
-  };//
-
-  showSuccess() {
-    console.log("show success");
-  }
-
-  showError() {
-    console.log("show error");
-  };//
 
   ngAfterViewInit() {
 
-    this._storage.get("token").then((val) => {
-      console.log(val);
-      this._dataService.getBooksList(val)
+    
+
+  };//
+
+  ionViewDidLoad(){
+    setTimeout(() => {
+      this.getUserFeeds();
+    },1000)
+    
+  }
+
+
+  getUsers() {
+    this._storage.get("userdata").then((val) => {
+
+      let userData = JSON.parse(val);
+      console.log(userData);
+      this._dataService.getAllUsersList(val)
         .subscribe(
-          (response) => {
-            console.log(response.json())
-            let responseData = response.json();
-            if(responseData.success == true){
-              this.myBooks = responseData.data;
-            }
-          },
-          (error) => {
-            console.log(error);
+        (response) => {
+          console.log(response)
+          if (response.reasonCode == 3) {
+            console.log("Invalid user log him out");
+            this.showLogoutAlert();
           }
+        },
+        (error) => {
+          console.log(error);
+        }
         )
 
     })
+  };//
+
+  getUserFeeds() {
+    this._storage.get("userdata")
+      .then((val) => {
+
+        this._dataService.getUserPosts(val).subscribe(
+          (response) => {
+            console.log(response)
+              console.log(response)             
+              this.checkResponseForUserFeeds(response);
+          }
+        )
+
+      })
+      .catch((err => {
+        this.showErrorAlertController("Server Error")
+      }))
+
 
 
   };//
 
-}
+  checkResponseForUserFeeds(responseData){
+
+    if(responseData.errorCode == 3){
+      this.showLogoutAlert()
+    }else if(responseData.errorCode == 4){
+
+    }else{
+      this.populateUserFeedsArray(responseData);
+    }
+
+  };//
+
+  populateUserFeedsArray(responseData){
+    this.feedsArray = responseData.data;
+  }
+
+  showLogoutAlert() {
+
+    const alert = this._alertController.create({
+      title: 'Not Authenticated',
+      message: 'Another device already logged in, login again!',
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this._storage.clear();
+            setTimeout(() => {
+              this.navCtrl.setRoot(LoginPage)
+            }, 1000)
+
+          }
+        }
+      ]
+    });
+    alert.present();
+  };//
+
+  showErrorAlertController(msg:any) {
+
+    const alert = this._alertController.create({
+      title: 'Error',
+      message: `There is an error. Please check your internet connection and try again! ${msg}`,
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            //console.log('Buy clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
+
+  };//
+
+  getImageBaseString(imgBaseString):string{
+    let imgString = '';
+    imgString = imgBaseString
+    return imgString;
+  }
+
+  getStarAverage(feed):string{
+    var feedCommentArray = feed.feedComment;
+
+    let starsArray = [];
+
+    _.forEach(feedCommentArray, function(value,index) {
+      starsArray.push(parseInt(value.stars));
+      
+    });
+    let starsAvg =_.mean(starsArray);
+    return `${starsAvg}`;
+  }
+
+
+};//

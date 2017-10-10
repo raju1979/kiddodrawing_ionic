@@ -24,6 +24,11 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { MomentModule } from 'angular2-moment';
 import { AddFeed } from '../pages/add-feed/add-feed';
+import { FeedsList } from '../pages/feeds-list/feeds-list';
+
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ProfilePage } from '../pages/profile/profile';
+import { AddCommentPage } from '../pages/add-comment/add-comment';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,10 @@ import { AddFeed } from '../pages/add-feed/add-feed';
     LoginPage,
     ShelfPage,
     AdduserPage,
-    AddFeed
+    AddFeed,
+    FeedsList,
+    ProfilePage,
+    AddCommentPage
   ],
   imports: [
     BrowserModule,
@@ -52,13 +60,16 @@ import { AddFeed } from '../pages/add-feed/add-feed';
     LoginPage,
     ShelfPage,
     AdduserPage,
-    AddFeed
+    AddFeed,
+    FeedsList,
+    ProfilePage,
+    AddCommentPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    File,DataService
+    File,DataService,Camera
   ]
 })
 export class AppModule {}

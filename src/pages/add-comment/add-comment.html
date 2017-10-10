@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar color="appcolor">
+    <ion-title>Add Comment</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="addCommentPage">
+    <div class="addCommentBox">
+      <textarea placeholder="Add your comment"></textarea>
+      <button><ion-icon name="send"></ion-icon></button>
+    </div>
+
+    <div class="commentList">
+      <div *ngFor="let comment of commentsList, let i = index" class="comments">
+        <h3>
+          <span>{{comment?.createdBy}}</span> 
+          <span class="grey content-right" [innerHTML]="getTime(comment?.createdOn)"></span>
+        </h3>
+        <p class="grey">{{comment?.content}}</p>
+      </div>
+    </div>
+  </div>
+</ion-content>

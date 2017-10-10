@@ -1,22 +1,40 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="appcolor">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Feeds</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary block (click)="showFromAsset()">show from asset</button>
-  <button ion-button dark block (click)="showFromAsset2()">show from asset - 2</button>
-  <button ion-button primary block  (click)="showFromSdCard()">show from sd card</button>
-  <button ion-button primary block  (click)="showFromSdCardNoPass()">show from sd card no pass</button>
+      <div class="photoList" *ngFor="let feed of feedsArray, let i = index">
+          <div class="createrInfo">
+            <!-- <img src="{{photo.createdBy.snap}}" alt=""> -->
+            <div>
+                <h3>{{feed.userData.name}}</h3><!-- {{photo.createdBy.name}} -->
+                <p>{{feed?.createdAt | amTimeAgo}}</p><!-- {{photo.createdBy.name}} -->
+            </div>
+          </div>
+          <div class="photoImg">
+              <img src="{{feed.imgBaseString}}" alt="">
+          </div>
+          <div class="photoActions"> 
+                <button>
+                  <ion-icon ios="md-star-outline" md="md-star-outline"></ion-icon>
+                  <span>3</span>
+                </button>
+                <button (click)="addComment()">
+                  <ion-icon ios="ios-chatboxes-outline" md="ios-chatboxes-outline"></ion-icon> <span>12 Comments</span>
+                </button> 
+          </div> 
+        </div>
+        <button ion-button block clear  color="appcolor" (click)="getFeedsList(lastObjectId,limit)">
+           <span>Load More ...</span>
+         </button>
+     
+      
 
 </ion-content>
+

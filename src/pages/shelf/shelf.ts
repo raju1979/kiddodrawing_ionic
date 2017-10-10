@@ -34,7 +34,7 @@ export class ShelfPage {
 
   };//
 
-  ionViewDidLoad(){
+  ionViewWillEnter(){
     setTimeout(() => {
       this.getUserFeeds();
     },1000)

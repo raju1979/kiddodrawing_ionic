@@ -13,6 +13,9 @@ export class DataService {
   myData: string = "x_#@dndfhj^%";
 
   baseExpressUrl = "http://localhost:5000/";
+  // baseExpressUrl = "  https://kiddodrawing.herokuapp.com/";
+
+
 
   userData:any;
 
@@ -136,10 +139,75 @@ export class DataService {
         headers.append('Content-Type', 'application/json');
 
         let successData = this._http.post(`${this.baseExpressUrl}user/getuserfeeds`, formData, { headers: headers }).map(res => res.json());;
-        return successData;
+        return successData;      
 
-      
+  };//
 
+  addNewFeed(feedData) {
+    //console.log(JSON.stringify(feedData));
+
+
+    var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(feedData), this.myData);
+    //console.log(ciphertext.toString())
+    // // Decrypt 
+    var bytes = CryptoJS.AES.decrypt(ciphertext.toString(), this.myData);
+    var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    
+    //console.log(decryptedData);
+
+
+    var formData = {
+      data: encodeURIComponent(ciphertext.toString())
+    }
+
+    console.log(JSON.stringify(formData));
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let successData = this._http.post(`${this.baseExpressUrl}feed/addfeed`, formData, { headers: headers }).map(res => res.json());;
+
+    //.map((res: Response) => res.json())
+    console.log(successData);
+    return successData;
+  };//
+
+  validateToken(userSavedData){
+    
+    var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(userSavedData), this.myData);
+
+      // // Decrypt 
+    var bytes = CryptoJS.AES.decrypt(ciphertext.toString(), this.myData);
+    var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+    console.log(decryptedData)
+
+      var formData = {
+        data: encodeURIComponent(ciphertext.toString())
+      }
+  
+      console.log(JSON.stringify(formData));
+  
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');    
+
+    let successData = this._http.post(`${this.baseExpressUrl}user/validatetoken`, formData, { headers: headers }).map(res => res.json());;
+    
+     return successData; 
+  };//
+
+  getAllFeeds(id,limit){
+
+    var formData = {
+      id: id,
+      limit:limit
+    }
+
+    console.log(formData);
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let successData = this._http.post(`${this.baseExpressUrl}feed/feedlist`,formData,{headers:headers}).map(res => res.json());
+    return successData;
   }
 
 

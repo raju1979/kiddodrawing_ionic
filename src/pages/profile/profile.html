@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar color="appcolor">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="myInfo">
+    <div class="profilePicture">
+      <img src="assets/img/user3.jpg" alt="">
+    </div>
+    <div class="profileInfo">
+      <h3>Lucky Kashyap</h3>
+      <p>
+        <ion-icon name="pin"></ion-icon>
+        <span>New Delhi</span>
+      </p>
+      <p>
+        <ion-icon name="image"></ion-icon>
+        <span>10 Photos</span>
+      </p>
+    </div>
+  </div>
+  <h3 class="titleMyPhotos">
+    My Photos
+  </h3>
+  
+  <div class="photoList" *ngFor="let photo of photoList, let i = index"> 
+    <div class="photoImg">
+      <img src="{{photo.imageData}}" alt="" />
+    </div>
+    <div class="photoActions">
+      <button>
+        <ion-icon ios="md-star-outline" md="md-star-outline"></ion-icon>
+        <span>3</span>
+      </button>
+      <button (click)="addComment()">
+        <ion-icon ios="ios-chatboxes-outline" md="ios-chatboxes-outline"></ion-icon>
+        <span>12 Comments</span>
+      </button>
+      <button>
+        <ion-icon name="calendar"></ion-icon>
+        <span>{{photo.createdOn}}</span>
+      </button>
+    </div>
+  </div>
+</ion-content>

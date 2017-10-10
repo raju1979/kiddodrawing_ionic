@@ -13,7 +13,26 @@
 
   <!-- <button ion-button block (click)="getUserFeeds()">Get User Feeds</button> -->
 
-  <ion-card *ngFor="let feed of feedsArray, let i = index">
+  <div class="photoList" *ngFor="let feed of feedsArray, let i = index">
+    <div class="createrInfo">
+      
+      <div>
+          <h3>{{feed?.feedTitle}}</h3>
+          <p>{{feed?.updatedAt | amTimeAgo}}</p>
+      </div>
+    </div>
+    <div class="photoImg">
+      <img [src]="getImageBaseString(feed?.imgBaseString)" alt="">
+    </div>
+    <div class="photoActions" *ngIf="feed?.feedComment.length > 0">
+        <button><ion-icon name="star"></ion-icon><div [innerHTML]="getStarAverage(feed)"></div></button>
+        <button><ion-icon name="chatboxes" (click)="addComment()"></ion-icon> <div>{{feed?.feedComment.length}} Comment</div></button>
+    </div>
+  
+    
+  </div>
+
+  <!-- <ion-card *ngFor="let feed of feedsArray, let i = index">
     
       <ion-item>
         <h2>{{feed?.feedTitle}}</h2>
@@ -39,14 +58,14 @@
             <div>{{feed?.feedComment.length}} Comment</div>
           </button>
         </ion-col>
-        <!-- <ion-col center text-center>
+        <ion-col center text-center>
           <ion-note>
             11h ago
           </ion-note>
-        </ion-col> -->
+        </ion-col> 
       </ion-row>
     
-    </ion-card>
+    </ion-card> -->
 
   <!-- <img src="{{feedsArray[0]?.imgBaseString}}" alt="" /> -->
 

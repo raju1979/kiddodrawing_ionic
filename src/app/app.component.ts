@@ -8,8 +8,10 @@ import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ShelfPage } from '../pages/shelf/shelf';
 import { AddFeed } from '../pages/add-feed/add-feed';
+import { FeedsList } from '../pages/feeds-list/feeds-list';
 
 import { Storage } from '@ionic/storage';
+import { ProfilePage } from '../pages/profile/profile';
 
 declare var FCMPlugin:any;
 
@@ -28,8 +30,10 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: ShelfPage },
-      { title: 'New Post', component: AddFeed }
+      { title: 'Home', component: HomePage },
+      { title: 'New Post', component: AddFeed },
+      { title: 'Posts', component: ShelfPage },
+      { title: 'Profile', component: ProfilePage }
     ];
 
     /// Throw this in a provider constructor you will use for notifications:
@@ -71,7 +75,7 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.push(page.component);
+    this.nav.setRoot(page.component);
   };//
 
   logout(){

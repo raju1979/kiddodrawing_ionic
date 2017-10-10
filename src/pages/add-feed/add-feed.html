@@ -1,51 +1,67 @@
-<!--
-  Generated template for the AddFeedPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Something Awesome...</ion-title>
-  </ion-navbar>
-
-</ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Add Feed</ion-title>
+    </ion-navbar>
+  </ion-header>
 
 
 <ion-content>
 
   <div id="formContainer">
 
-    <form novalidate [formGroup]="myform" (ngSubmit) = "submitFeed()">
+    <form novalidate [formGroup]="myform" (ngSubmit)="submitFeed()">
 
-    <ion-card>
+      <ion-card>
+          <img [src]=getCameraImg() alt="">
 
-      <ion-card-content>
-        <input type="text" class="frmInput" placeholder="Enter Title" formControlName="feedTitle"/>
-      </ion-card-content>
-
-      <ion-card-content>
-        <input type="text" class="frmInput" placeholder="Enter Description"  formControlName="feedDescription"/>
-      </ion-card-content>
-
-      <ion-card-content>
-          <input type="text" class="frmInput" placeholder="Enter keywords" formControlName="feedKeywords"/>
+        <ion-card-content>
+          <button class="roundCameraBtn" (click)="getPicture()">
+              <ion-icon name="camera"></ion-icon>
+          </button>
         </ion-card-content>
 
-      <input type="hidden"  formControlName="createdBy"/>
-      <input type="hidden"  formControlName="imgBaseString"/>
+        <ion-card-content>
+          <input type="text" class="frmInput" placeholder="Post Title" formControlName="feedTitle" />
+        </ion-card-content>
 
-      <ion-card-content>
-        <button ion-button block>Submit</button>
-      </ion-card-content>
+        <ion-card-content>
+          <input type="text" class="frmInput" placeholder="Post Description" formControlName="feedDescription" />
+        </ion-card-content>
 
-    </ion-card>
+        <ion-card-content>
+          <input type="text" class="frmInput" placeholder="Post keywords" formControlName="feedKeywords" />
+        </ion-card-content>
 
-  </form>
+        <ion-card-content>
+          <button class="roundBtnSubmit">
+              <ion-icon name="checkmark"></ion-icon>
+          </button>
+        </ion-card-content>
 
-  <pre>{{myform.value | json}}</pre>
+        <input type="hidden" formControlName="createdBy" />
+        <input type="hidden" formControlName="imgBaseString" />
+        <input type="hidden" formControlName="userToken" />
+
+
+
+      </ion-card>
+
+
+
+
+    </form>
+
+    <pre>{{myform.value | json}}</pre>
   </div>
-  
+
+  <div id="loadingContainer" *ngIf="httpRequestGoing">
+    <img [src]="getLoadingImg()" alt="" class="loadingImg" />
+    <p>Please wait ...</p>
+    <p>Do not press back button.</p>
+  </div>
+
 
 </ion-content>

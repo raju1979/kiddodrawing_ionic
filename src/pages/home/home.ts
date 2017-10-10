@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, Platform, AlertController } from 'ionic-angular';
-
-import { File } from '@ionic-native/file';
-
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { DataService } from '../../services/data.service';
 
-declare var cordova: any;
+import { Storage } from '@ionic/storage';
+import { LoginPage } from '../login/login';
+import { AddCommentPage } from '../add-comment/add-comment';
 
-declare var PSPDFKit:any;
+declare var _:any;
 
 @Component({
   selector: 'page-home',
@@ -15,150 +14,133 @@ declare var PSPDFKit:any;
 })
 export class HomePage {
 
-  mainDirectoryName: string = "Download";
-  fs: string;	
+  limit = 5;
 
-  constructor(public navCtrl: NavController, private _file:File, private platform:Platform, private _alertCtrl:AlertController,private _dataService:DataService) {
-  		
-      
+  feedsArray:Array<any> = [];
 
-      
-      
+  currentId = 0;
+  lastObjectId:string ='';
 
-  		
+  constructor(public navCtrl: NavController, private _storage: Storage, public navParams: NavParams, private _dataService: DataService, private _alertController: AlertController) {
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad FeedsListPage');
+  }
+
+  ionViewWillEnter() {
+    // here we can either return true or false
+    // depending on if we want to leave this view
+
+    let userObject: any;
+
+
+    this._storage.get("userdata")
+      .then((val) => {
+        userObject = JSON.parse(val);
+        this._dataService.validateToken(userObject)
+          .subscribe(
+          (data) => {
+            console.log(data)
+            if (data.success == true) {
+              this.getFeedsList(0, this.limit);
+            } else {
+              this.showLogoutAlert()
+            }
+          },
+          (err) => this.showLogoutAlert()
+          )
+
+
+      })
+
   };//
 
-  //check if folder cbsapp exists
-  checkPrimaryFolder() {
-    //this.fs = cordova.file.dataDirectory;
-    this._file.checkDir(this.fs, this.mainDirectoryName).
-      then(_ => this.showSuccessAlert("Folder found"))
-      .catch(err => this.showFailureAlert('Folder not found'));
+  getFeedsList(id, limit) {
+
+    id = 0 || this.lastObjectId;
+    this._dataService.getAllFeeds(id, limit)
+      .subscribe(
+      (data) => {
+        console.log(data);
+        if (data.success == false) {
+          this.showErrorAlertController();
+        } else {
+          this.populateFeedsArray(data);
+        }
+      },
+      (err) => this.showErrorAlertController()
+      )
   };//
 
-  showSuccessAlert(msg:string){
-  	const alertSuccess = this._alertCtrl.create({
-      title: `Success!`,
-      subTitle: `Success ${msg}`,
+
+  populateFeedsArray(data) {
+
+    // this.feedsArray.push(data.data);
+    // this.feedsArray = _.flatten(this.feedsArray)
+    // console.log(this.feedsArray)
+    _.each(data.data,(value,index) => {
+      this.feedsArray.push(value);
+    })
+    this.currentId = this.currentId + 1;
+
+    let feedsArrayLen = this.feedsArray.length - 1;
+    this.lastObjectId = this.feedsArray[feedsArrayLen]._id;
+
+
+    console.log(this.lastObjectId);
+  }
+
+
+  showLogoutAlert() {
+
+    const alert = this._alertController.create({
+      title: 'Not Authenticated',
+      message: 'Another device already logged in, login again!',
       buttons: [
         {
-          text: 'OK',
+          text: 'Ok',
           handler: () => {
-            console.log('Buy clicked');
-            this.showMyDocument();
+            this._storage.clear();
+            setTimeout(() => {
+              this.navCtrl.setRoot(LoginPage)
+            }, 1000)
+
           }
         }
       ]
     });
-
-    alertSuccess.present();
-    
-  }
-
-  showFailureAlert(msg:string){
-  	const alertFailure = this._alertCtrl.create({
-      title: `Fail!`,
-      subTitle: `Fail ${msg}`,
-      buttons: ['Ok']
-    });
-
-    alertFailure.present();
-  }
-
-  showMyDocument() {
-  	// let path = this.fs+this.mainDirectoryName+"/sample.pdf";
-  	let path = this.fs+ this.mainDirectoryName + "/sample.pdf";
-
-  	console.log(PSPDFKit);
-  	console.log(path);
-
-    this._file.createDir(this.fs, this.mainDirectoryName + "/" + "appdata", true)
-      // .then(() => this.downloadPackageFile(id))
-      .then(() => {
-        PSPDFKit.showDocument(path, 'abcd@1234',{
-          title: 'My PDF Document',
-          page: 0,
-          scrollDirection: PSPDFKit.PageScrollDirection.VERTICAL,
-          scrollMode: PSPDFKit.ScrollMode.CONTINUOUS,
-          useImmersiveMode: true
-        }, this.showSuccess, this.showError)
-      })
-      .catch((err) => console.log(err))
- 
-	
-	
-
-	// PSPDFKit.showDocument(path, {
-	// 	title: 'My PDF Document',
-	// 	page: 4,
-	// 	scrollDirection: PSPDFKit.PageScrollDirection.VERTICAL,
-	// 	scrollMode: PSPDFKit.ScrollMode.CONTINUOUS,
-	// 	useImmersiveMode: true
-	// }, this.showSuccess, this.showError)
-  }
-
-  showFromSdCardNoPass(){
-    this.fs = this._file.externalRootDirectory;
-    let path = this.fs+ this.mainDirectoryName + "/faq.pdf";
-
-    console.log(path);
-
-    this._file.createDir(this.fs, this.mainDirectoryName + "/" + "appdata", true)
-      // .then(() => this.downloadPackageFile(id))
-      .then(() => {
-        PSPDFKit.showDocument(path, {
-          title: 'My PDF Document',
-          page: 0,
-          scrollDirection: PSPDFKit.PageScrollDirection.VERTICAL,
-          scrollMode: PSPDFKit.ScrollMode.CONTINUOUS,
-          useImmersiveMode: true
-        }, this.showSuccess, this.showError)
-      })
-      .catch((err) => console.log(err))
-
-        
-
-  }
-
-  showFromAsset(){
-    PSPDFKit.showDocumentFromAssets('www/assets/sample.pdf', {
-      title: 'My PDF Document',
-      page: 4,
-      scrollDirection: PSPDFKit.PageScrollDirection.VERTICAL,
-      scrollMode: PSPDFKit.ScrollMode.CONTINUOUS,
-      useImmersiveMode: true
-    },this.showSuccess,this.showError);
+    alert.present();
   };//
 
-  showFromAsset2(){
-    PSPDFKit.showDocumentFromAssets('www/sample.pdf', {
-      title: 'My PDF Document',
-      page: 4,
-      scrollDirection: PSPDFKit.PageScrollDirection.VERTICAL,
-      scrollMode: PSPDFKit.ScrollMode.CONTINUOUS,
-      useImmersiveMode: true
-    },this.showSuccess,this.showError);
-  };//
+  showErrorAlertController(msg?: any) {
 
-  showFromSdCard(){
-    this.platform.ready().then(() => {
-        console.log(this._file);
-        this.fs = this._file.externalRootDirectory;
-        console.log(this.fs);
-        if (this.platform.is('mobile')) {
-          this.checkPrimaryFolder();
+    const alert = this._alertController.create({
+      title: 'Error',
+      message: `There is an error. Please check your internet connection and try again! ${msg}`,
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            //console.log('Buy clicked');
+          }
         }
-      })
+      ]
+    });
+    alert.present();
+
+  };//
+
+  fetchMoreFeeds(infiniteScroll) {
+
+    this.getFeedsList(this.lastObjectId, this.limit)
+    
+    infiniteScroll.complete();
+
   }
 
-  showSuccess(){
-  	console.log("show success");
+  addComment(){
+    this.navCtrl.push(AddCommentPage);
   }
-
-  showError(){
-  	console.log("show error");
-  }
-
-  
 
 }

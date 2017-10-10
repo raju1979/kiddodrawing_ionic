@@ -1,0 +1,74 @@
+page-add-comment {
+    .scroll-content
+    {
+        overflow: hidden;
+    }
+    .addCommentPage
+    {
+        width: 100%;
+        height: 100%;
+        display: flex; 
+        flex-direction: column;
+    }
+    .addCommentBox
+    {
+        display: flex; 
+        height: 70px;
+        box-sizing: border-box;
+    }
+    .addCommentBox textarea
+    {
+        flex: 1; 
+        resize: none;
+        padding: 10px;
+        border: solid 1px #cfcfcf;
+    }
+    .addCommentBox button{
+        background-color: color($colors, appcolor);
+        border: none;
+        width: 60px;
+        color: #fff;
+        font-size: 30px;
+        outline: none;
+    }
+    .commentList
+    {
+        flex: 1;
+        padding: 1em 0;
+        overflow-y: scroll;
+    }
+    .comments{
+        width: 100%;
+        padding: 10px;
+        border: solid 1px #ececec;
+        margin-bottom: 10px;
+        border-radius: 3px;
+    }
+    .comments h3{
+        width: 100%;
+        font-size: 0.9em;
+        font-weight: bold;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+    .comments h3 span
+    {
+        flex: 1;
+    }
+    .comments p{
+        color: #444;
+        margin: 0;
+        padding: 0;
+        padding-top: 4px;
+    }
+    .grey
+    {
+        color: #888;
+    }
+    .content-right
+    {
+        text-align: right;
+    }
+}

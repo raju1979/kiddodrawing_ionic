@@ -1,7 +1,7 @@
 <ion-content>
     <div class="loginPage">
         <div class="loginPageContainer">
-            <img src="../assets/img/logo.svg" alt=""/>
+            <img [src]="getLogo()" alt=""/>
             <form #f="ngForm" novalidate (ngSubmit)="doLogin(f.value, f.valid)">
                 <input type="text" name="email" [(ngModel)]="user.email" #name="ngModel" required minlength="5" placeholder="email">
                 <input type="text" name="password" [(ngModel)]="user.password" #password="ngModel" required minlength="5" placeholder="password">

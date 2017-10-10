@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController,AlertController,MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController,AlertController,MenuController,Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ShelfPage } from '../shelf/shelf';
 import { DataService } from '../../services/data.service';
@@ -31,9 +31,9 @@ export class LoginPage {
     password: "asfsad"
   }
 
+  logoSrc:string = '';
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private _navCtrl: NavController, private _dataService: DataService, private _toastCtrl: ToastController, private _storage: Storage, private _alertController:AlertController, private _menuCtrl:MenuController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private _navCtrl: NavController, private _dataService: DataService, private _toastCtrl: ToastController, private _storage: Storage, private _alertController:AlertController, private _menuCtrl:MenuController,private _platform:Platform) {
     this.registrationString = this._dataService.genearateDataForLogin("I am rajesh");
     console.log(this.registrationString.toString());
 
@@ -65,6 +65,7 @@ export class LoginPage {
 
 
   userSuccessfullyValidated(userData: any) {
+    
     console.log(userData);
     var uri_dec = decodeURIComponent(userData);
     console.log(uri_dec);
@@ -81,7 +82,7 @@ export class LoginPage {
     });
     toast.onDidDismiss(() => {
       this._dataService.setUserDataOnLogin(decryptedData);
-      this.navCtrl.setRoot(ShelfPage)
+      this.navCtrl.setRoot(HomePage);
     });
     toast.present();
 
@@ -124,7 +125,7 @@ export class LoginPage {
         if(typeof data === "undefined" || data == null){
 
         }else{
-          this.navCtrl.setRoot(ShelfPage);
+          this.navCtrl.setRoot(HomePage);
         }
         
       })
@@ -137,6 +138,18 @@ export class LoginPage {
 
   ionViewWillLeave(){
     this._menuCtrl.enable(true);
+  }
+
+  getLogo(){
+
+    if(this._platform.is("mobile")){
+      this.logoSrc = "assets/img/logo.svg";
+    }else{
+      this.logoSrc = "../assets/img/logo.svg";
+    }
+
+    return this.logoSrc;
+
   }
 
 }

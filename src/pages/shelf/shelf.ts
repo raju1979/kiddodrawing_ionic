@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController,ModalController } from 'ionic-angular';
 import { DataService } from '../../services/data.service';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
 
 import {MomentModule} from 'angular2-moment/moment.module';
+
+import { ProfileModal } from '../profile-modal/profile-modal';
 
 
 
@@ -22,7 +24,7 @@ export class ShelfPage {
 
   feedsArray:Array<any> = [];
 
-  constructor(public navCtrl: NavController, private _dataService: DataService, private _storage: Storage, private _alertController: AlertController) {
+  constructor(public navCtrl: NavController, private _dataService: DataService, private _storage: Storage, private _alertController: AlertController,private _modalCtrl:ModalController) {
 
   };//
 
@@ -156,8 +158,21 @@ export class ShelfPage {
       
     });
     let starsAvg =_.mean(starsArray);
-    return `${starsAvg}`;
-  }
+    if(feedCommentArray.length == 0){
+      return `0`;
+    } else{
+      return `${starsAvg}`;
+    }
+  };//
 
+  openProfileModal(){
+    console.log("pppp")
+    let profileModal = this._modalCtrl.create(ProfileModal, { userId: 8675309 });
+    profileModal.onDidDismiss(data => {
+      console.log(data);
+      
+    });
+    profileModal.present();
+  }
 
 };//

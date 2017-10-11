@@ -1,0 +1,92 @@
+page-home {
+
+    .scroll-content
+    {
+        background-color: #f3f3f3;
+    }
+    .photoList
+    {
+        width: 100%;
+        height: auto;
+        float: left;
+        border-bottom: solid 1px #cecdcd; 
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 8px 6px -6px rgba(0,0,0,0.3);
+        border-radius: 3px;
+    }
+    .createrInfo,
+    .photoImg,
+    .photoActions
+    {
+        width: 100%;
+        height: auto;
+        float: left;
+    }
+    .photoImg{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .photoImg img{
+        max-height: 300px;
+    }
+    .createrInfo
+    {
+        display: flex;
+        padding-bottom: 8px;
+        padding: 10px;
+    }
+    .createrInfo img
+    {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    .createrInfo div
+    {
+        flex: 1;
+        padding: 0 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .createrInfo div h3,
+    .createrInfo div p
+    {
+        margin: 0;
+        padding: 0;
+    }
+    .createrInfo div h3
+    {
+        text-transform: uppercase;
+        font-size: 0.9em;
+        margin: 5px 0;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    .createrInfo div p
+    {
+        font-size: 0.8em;
+        color: #757575;
+    }
+    .photoActions
+    {
+        display: flex;
+        padding: 10px;  
+    }
+    .photoActions button
+    {
+        font-size: 1.1em;
+        padding: 5px;
+        border: none;
+        background: none;
+        outline: none;
+        margin-right: 10px;
+    }
+    .photoActions button span
+    {
+        padding-left: 8px;
+    }
+
+}

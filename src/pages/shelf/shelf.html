@@ -1,77 +1,65 @@
 <ion-header>
   <ion-navbar color="appcolor">
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>My Posts</ion-title>
+
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>My Profile</ion-title>
+
+
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-
-  <!-- <button ion-button block (click)="getUsers()">Get Users</button> -->
-
-  <!-- <button ion-button block (click)="getUserFeeds()">Get User Feeds</button> -->
-
+  <div class="myInfo">
+    <div class="profilePicture">
+      <img src="assets/img/user3.jpg" alt="">
+    </div>
+    <div class="profileInfo">
+      <h3>Lucky Kashyap</h3>
+      <p>
+        <ion-icon name="pin"></ion-icon>
+        <span>New Delhi</span>
+      </p>
+      <p>
+        <ion-icon name="image"></ion-icon>
+        <span>10 Photos</span>
+      </p>
+    </div>
+  </div>
+  <h3 class="titleMyPhotos">
+    My Photos
+  </h3>
   <div class="photoList" *ngFor="let feed of feedsArray, let i = index">
-    <div class="createrInfo">
-      
+    <div class="createrInfo"> 
       <div>
-          <h3>{{feed?.feedTitle}}</h3>
-          <p>{{feed?.updatedAt | amTimeAgo}}</p>
+        <h3>{{feed?.feedTitle}}</h3>
       </div>
     </div>
     <div class="photoImg">
       <img [src]="getImageBaseString(feed?.imgBaseString)" alt="">
     </div>
-    <div class="photoActions" *ngIf="feed?.feedComment.length > 0">
-        <button><ion-icon name="star"></ion-icon><div [innerHTML]="getStarAverage(feed)"></div></button>
-        <button><ion-icon name="chatboxes" (click)="addComment()"></ion-icon> <div>{{feed?.feedComment.length}} Comment</div></button>
+    <div class="photoActions">
+      <!-- *ngIf="feed?.feedComment.length > 0" -->
+      <button>
+        <ion-icon ios="md-star-outline" md="md-star-outline"></ion-icon>
+        <span [innerHTML]="getStarAverage(feed)"></span>
+      </button>
+      <button>
+        <ion-icon ios="ios-chatboxes-outline" md="ios-chatboxes-outline" (click)="addComment()"></ion-icon>
+        <span>{{feed?.feedComment.length}}</span>
+      </button>
+      <button>
+        <ion-icon ios="ios-clock-outline" md="ios-clock-outline"></ion-icon>
+        <span>{{feed?.updatedAt | amTimeAgo}}</span>
+      </button>
     </div>
-  
-    
+
   </div>
 
-  <!-- <ion-card *ngFor="let feed of feedsArray, let i = index">
-    
-      <ion-item>
-        <h2>{{feed?.feedTitle}}</h2>
-        <p><time>{{feed?.updatedAt | amTimeAgo}}</time></p>
-      </ion-item>
-    
-      <img [src]="getImageBaseString(feed?.imgBaseString)" class="cardClass" />
-    
-      <ion-card-content>
-        <p>{{feed?.feedDescription}}.</p>
-      </ion-card-content>
-    
-      <ion-row *ngIf="feed?.feedComment.length > 0">
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="star"></ion-icon>
-            <div [innerHTML]="getStarAverage(feed)"></div>
-          </button>
-        </ion-col>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="text"></ion-icon>
-            <div>{{feed?.feedComment.length}} Comment</div>
-          </button>
-        </ion-col>
-        <ion-col center text-center>
-          <ion-note>
-            11h ago
-          </ion-note>
-        </ion-col> 
-      </ion-row>
-    
-    </ion-card> -->
-
-  <!-- <img src="{{feedsArray[0]?.imgBaseString}}" alt="" /> -->
 
 
-  
 </ion-content>
-
-
-<!-- f2780b -->

@@ -13,7 +13,7 @@ export class DataService {
   myData: string = "x_#@dndfhj^%";
 
   baseExpressUrl = "http://localhost:5000/";
-  // baseExpressUrl = "  https://kiddodrawing.herokuapp.com/";
+  // baseExpressUrl = "https://kiddodrawing.herokuapp.com/";
 
 
 

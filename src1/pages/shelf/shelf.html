@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar color="appcolor">
+
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>My Profile</ion-title>
+
+    <ion-buttons right>
+      <button ion-button (click)="openProfileModal()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="photoList" *ngFor="let feed of feedsArray, let i = index">
+    <div class="createrInfo">
+
+      <div>
+        <h3>{{feed?.feedTitle}}</h3>
+        <p>{{feed?.updatedAt | amTimeAgo}}</p>
+      </div>
+    </div>
+    <div class="photoImg">
+      <img [src]="getImageBaseString(feed?.imgBaseString)" alt="">
+    </div>
+    <div class="photoActions" *ngIf="feed?.feedComment.length > 0">
+      <button><ion-icon name="star"></ion-icon><div [innerHTML]="getStarAverage(feed)"></div></button>
+      <button><ion-icon name="chatboxes" (click)="addComment()"></ion-icon> <div>{{feed?.feedComment.length}} Comment</div></button>
+    </div>
+
+
+  </div>
+
+
+
+</ion-content>

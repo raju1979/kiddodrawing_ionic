@@ -1,0 +1,67 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Add Feed</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+
+<ion-content>
+
+  <div id="formContainer">
+
+    <form novalidate [formGroup]="myform" (ngSubmit)="submitFeed()">
+
+      <ion-card>
+          <img [src]=getCameraImg() alt="">
+
+        <ion-card-content>
+          <button class="roundCameraBtn" (click)="getPicture()" [ngStyle]="{'background-image': 'url(' + imgAvatarString + ')'}">
+              <ion-icon name="camera" class="cameraIcon" color="dark"></ion-icon>
+          </button>
+        </ion-card-content>
+
+        <ion-card-content>
+          <input type="text" class="frmInput" placeholder="Post Title" formControlName="feedTitle" />
+        </ion-card-content>
+
+        <ion-card-content>
+          <input type="text" class="frmInput" placeholder="Post Description" formControlName="feedDescription" />
+        </ion-card-content>
+
+        <ion-card-content>
+          <input type="text" class="frmInput" placeholder="Post keywords" formControlName="feedKeywords" />
+        </ion-card-content>
+
+        <ion-card-content>
+          <button class="roundBtnSubmit">
+              <ion-icon name="checkmark"></ion-icon>
+          </button>
+        </ion-card-content>
+
+        <input type="hidden" formControlName="createdBy" />
+        <input type="hidden" formControlName="imgBaseString" />
+        <input type="hidden" formControlName="userToken" />
+
+
+
+      </ion-card>
+
+
+
+
+    </form>
+
+    <pre>{{myform.value | json}}</pre>
+  </div>
+
+  <div id="loadingContainer" *ngIf="httpRequestGoing">
+    <img [src]="getLoadingImg()" alt="" class="loadingImg" />
+    <p>Please wait ...</p>
+    <p>Do not press back button.</p>
+  </div>
+
+
+</ion-content>

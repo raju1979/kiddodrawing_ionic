@@ -4,11 +4,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ShelfPage } from '../pages/shelf/shelf';
 import { AddFeed } from '../pages/add-feed/add-feed';
-import { FeedsList } from '../pages/feeds-list/feeds-list';
 
 import { Storage } from '@ionic/storage';
 import { ProfilePage } from '../pages/profile/profile';
@@ -23,17 +21,16 @@ export class MyApp {
 
   rootPage: any = LoginPage;
 
-  pages: Array<{ title: string, component: any }>;
+  pages: Array<{ title: string, component: any, icon: string }>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private _alertController:AlertController, private _storage: Storage, private _menuCtrl:MenuController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'New Post', component: AddFeed },
-      { title: 'Posts', component: ShelfPage },
-      { title: 'Profile', component: ProfilePage }
+      { title: 'Home', component: HomePage, icon:'home' },
+      { title: 'New Photo', component: AddFeed, icon: 'image' },
+      { title: 'My Profile', component: ShelfPage, icon: 'person' }
     ];
 
     /// Throw this in a provider constructor you will use for notifications:

@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar color="appcolor">
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
@@ -18,8 +18,8 @@
           <img [src]=getCameraImg() alt="">
 
         <ion-card-content>
-          <button class="roundCameraBtn" (click)="getPicture()">
-              <ion-icon name="camera"></ion-icon>
+          <button class="roundCameraBtn" (click)="getPicture()" [ngStyle]="{'background-image': 'url(' + imgAvatarString + ')'}">
+              <ion-icon name="camera" class="cameraIcon" color="dark"></ion-icon>
           </button>
         </ion-card-content>
 

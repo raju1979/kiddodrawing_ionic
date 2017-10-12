@@ -16,17 +16,19 @@
 <ion-content>
   <div class="myInfo">
     <div class="profilePicture">
-      <img src="assets/img/user3.jpg" alt="">
+        <button class="roundCameraBtn" (click)="getPicture()" [ngStyle]="{'background-image': 'url(' + imgAvatarString + ')'}">
+            <ion-icon name="camera" class="cameraIcon" color="dark"></ion-icon>
+        </button>
     </div>
     <div class="profileInfo">
-      <h3>Lucky Kashyap</h3>
+      <h3>{{userData?.name}}</h3>
       <p>
         <ion-icon name="pin"></ion-icon>
-        <span>New Delhi</span>
+        <span>{{userData?.location}}</span>
       </p>
       <p>
         <ion-icon name="image"></ion-icon>
-        <span>10 Photos</span>
+        <span>{{feedsArray?.length}} Photos</span>
       </p>
     </div>
   </div>

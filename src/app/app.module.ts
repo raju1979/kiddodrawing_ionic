@@ -28,7 +28,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ProfilePage } from '../pages/profile/profile';
 import { AddCommentPage } from '../pages/add-comment/add-comment';
 import { CameraModal } from '../pages/camera-modal/camera-modal';
-import { ProfileModal } from '../pages/profile-modal/profile-modal';
 
 @NgModule({
   declarations: [
@@ -41,7 +40,6 @@ import { ProfileModal } from '../pages/profile-modal/profile-modal';
     ProfilePage,
     AddCommentPage,
     CameraModal,
-    ProfileModal
   ],
   imports: [
     BrowserModule,
@@ -63,7 +61,6 @@ import { ProfileModal } from '../pages/profile-modal/profile-modal';
     ProfilePage,
     AddCommentPage,
     CameraModal,
-    ProfileModal
   ],
   providers: [
     StatusBar,

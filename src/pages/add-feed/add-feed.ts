@@ -153,8 +153,8 @@ export class AddFeed {
       this._camera.getPicture(this.options).then((imageData) => {
         // imageData is either a base64 encoded string or a file URI
         // If it's base64:
-        this.imgFromCameraString = 'data:image/jpeg;base64,' + imageData;
-        this.myform.get("imgBaseString").setValue(this.imgFromCameraString);
+        this.imgAvatarString = 'data:image/jpeg;base64,' + imageData;
+        this.myform.get("imgBaseString").setValue(this.imgAvatarString);
         console.log("camera done");
        }, (err) => {
         // Handle error

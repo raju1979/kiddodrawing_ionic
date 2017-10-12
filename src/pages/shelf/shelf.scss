@@ -149,4 +149,22 @@ page-shelf {
         text-transform: uppercase;
     }
 
+    .roundCameraBtn{
+        width: 100px;
+        height: 100px;
+        border-radius:10px;
+        background-position: center;
+        background-size:cover;
+        background-repeat: none;
+        font-size: 30px;
+        color: #fff;
+        position: relative;
+    }
+
+    .cameraIcon{
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+    }
+
 }

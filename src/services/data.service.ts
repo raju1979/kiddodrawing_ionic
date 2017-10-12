@@ -12,8 +12,8 @@ export class DataService {
 
   myData: string = "x_#@dndfhj^%";
 
-  baseExpressUrl = "http://localhost:5000/";
-  // baseExpressUrl = "https://kiddodrawing.herokuapp.com/";
+  // baseExpressUrl = "http://localhost:5000/";
+  baseExpressUrl = "https://kiddodrawing.herokuapp.com/";
 
 
 
@@ -165,6 +165,34 @@ export class DataService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     let successData = this._http.post(`${this.baseExpressUrl}feed/addfeed`, formData, { headers: headers }).map(res => res.json());;
+
+    //.map((res: Response) => res.json())
+    console.log(successData);
+    return successData;
+  };//
+
+  addAvatarImg(daaForAvatarRequest) {
+    //console.log(JSON.stringify(feedData));
+
+
+    var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(daaForAvatarRequest), this.myData);
+    //console.log(ciphertext.toString())
+    // // Decrypt 
+    var bytes = CryptoJS.AES.decrypt(ciphertext.toString(), this.myData);
+    var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    
+    //console.log(decryptedData);
+
+
+    var formData = {
+      data: encodeURIComponent(ciphertext.toString())
+    }
+
+    console.log(JSON.stringify(formData));
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let successData = this._http.post(`${this.baseExpressUrl}user/addavatar`, formData, { headers: headers }).map(res => res.json());;
 
     //.map((res: Response) => res.json())
     console.log(successData);
